@@ -1,0 +1,14 @@
+#Debain Installation
+apt install Python3 certbot pip3
+pip3 install beautifulsoup4
+tar -xzvf HEAutoCertbot.tar.gz -c /root
+
+#Generating a new Certificate
+certgen.sh HE_USERNAME HE_PASSWORD HE_DOMAIN DOMAIN_CERT_NAME EMAIL_ADDRESS
+
+#Renewing a Certificate
+renewcert.sh HE_USERNAME HE_PASSWORD HE_DOMAIN
+
+#Example CRONTAB for NGINX
+0 2 * * * /root/renewcert.sh HE_USERNAME HE_PASSWORD HE_DOMAIN  >> /root/certbotrenew.log
+0 0 * * * /bin/systemctl restart nginx
